@@ -4,8 +4,10 @@ Dans la lignée du précédent Techlab, nous allons voir comment déployer l'app
 
 ## Prérequis 🏗️
 
-* Docker for windows (version 18.05.0-ce-win66, build 17760) disponible sur le channel [edge](https://download.docker.com/win/edge/Docker%20for%20Windows%20Installer.exe).
-* Kubectl (version 1.9.6)
+- Docker for windows (version 18.03.1-ce-win65, build 17513) disponible sur le channel stable.
+- Azure Cli (version 2.0.39)
+- Kubectl (version 1.9.6)
+- helm (version 2.9.1) [lien pour le téléchargement](https://github.com/kubernetes/helm/releases/tag/v2.9.1)
 
 Une fois Docker for windows (ou mac) installé, il vous faudra activer la prise en charge de Kubernetes comme ci-dessous.
 ![docker for windows kubernetes support](assets/docker-kubernetes-support.png)

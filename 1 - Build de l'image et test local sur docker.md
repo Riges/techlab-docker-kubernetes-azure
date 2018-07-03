@@ -1,7 +1,7 @@
 # Build de l'image et test local sur docker
 
 Nous partons sur le projet Lab survey ([https://github.com/Riges/lab-survey](https://github.com/Riges/lab-survey)). Cela va nous permettre d'avoir un front et son api dissociés du stockage qui sera un Redis.
-Pour préparer l'exercice, nous avons fait ca dans le répertoire **etape 1** qui sera notre repertoir de travail, vous n'avez donc pas besoin de clonner le projet.
+Pour préparer l'exercice, nous avons fait ca dans le répertoire **src** qui sera notre repertoir de travail, vous n'avez donc pas besoin de clonner le projet.
 
 ## Préambule : Docker Hub
 
