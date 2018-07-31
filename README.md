@@ -16,5 +16,6 @@ Une fois Docker for windows (ou mac) installé, il vous faudra activer la prise 
 
 <ul>
   <li><a href="./1 - Build de l'image et test local sur docker.md">Build de l'image et test local sur docker.md</a></li>
-  <li><a href="./2 - Registry et Kubernetes.md">Registry et Kubernetes</a></li>
+  <li><a href="./2 - Les ressources Azure.md">Les ressources Azure</a></li>
+  <li><a href="./3 - Deployer l'application sur le Cluster.md">Deployer l'application sur le Cluster</a></li>
 </ul>

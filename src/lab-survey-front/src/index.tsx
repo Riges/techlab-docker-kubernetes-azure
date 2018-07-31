@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import App from './containers/App';
 import DevTools from './containers/DevTools';
 import './index.css';
-import registerServiceWorker from './registerServiceWorker';
+import { unregister as unregisterServiceWorker } from './registerServiceWorker';
 import configureStore from './store/configureStore';
 import { ApplicationState } from './store/reducers';
 import { initialState } from './store/survey/reducer';
@@ -23,4 +23,5 @@ ReactDOM.render(
   </Provider>,
   document.getElementById('root') as HTMLElement
 );
-registerServiceWorker();
+
+unregisterServiceWorker();

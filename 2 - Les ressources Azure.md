@@ -164,7 +164,7 @@ La commande sur Azure Cli permettant d'intéragir avec des cluster Kubernetes es
   "enableRbac": false,
   "fqdn": "soattechla-soat-techlab-8f4fa8-224644c9.hcp.westeurope.azmk8s.io",
   "id": "/subscriptions/1c732489-346b-4a9a-a417-4f09c23378a7/resourceGroups/soat-techlab/providers/Microsoft.ContainerService/managedClusters/soatTechlabCluster",
-  "kubernetesVersion": "1.9.6",
+  "kubernetesVersion": "1.9.9",
   "linuxProfile": {
     "adminUsername": "azureuser",
     "ssh": {
@@ -212,7 +212,7 @@ Une fois l'opération réalisée, nous pourrons donc maintenant utiliser **kubet
 ```sh
 > kubectl get nodes
 NAME                       STATUS    ROLES     AGE       VERSION
-aks-nodepool1-49289993-0   Ready     agent     11m       v1.9.6
+aks-nodepool1-49289993-0   Ready     agent     11m       v1.9.9
 ```
 
 > #### Information
@@ -228,28 +228,31 @@ Pour mettre à jour votre cluster vers une autre version de Kubernetes, il faut 
 ```sh
 > az aks get-versions --location westeurope --output table
 KubernetesVersion    Upgrades
--------------------  -------------------------------------------------------------------------
-1.10.3               None available
-1.9.6                1.10.3
-1.9.2                1.9.6, 1.10.3
-1.9.1                1.9.2, 1.9.6, 1.10.3
-1.8.11               1.9.1, 1.9.2, 1.9.6
-1.8.10               1.8.11, 1.9.1, 1.9.2, 1.9.6
-1.8.7                1.8.10, 1.8.11, 1.9.1, 1.9.2, 1.9.6
-1.8.6                1.8.7, 1.8.10, 1.8.11, 1.9.1, 1.9.2, 1.9.6
-1.8.2                1.8.6, 1.8.7, 1.8.10, 1.8.11, 1.9.1, 1.9.2, 1.9.6
-1.8.1                1.8.2, 1.8.6, 1.8.7, 1.8.10, 1.8.11, 1.9.1, 1.9.2, 1.9.6
-1.7.16               1.8.1, 1.8.2, 1.8.6, 1.8.7, 1.8.10, 1.8.11
-1.7.15               1.7.16, 1.8.1, 1.8.2, 1.8.6, 1.8.7, 1.8.10, 1.8.11
-1.7.12               1.7.15, 1.7.16, 1.8.1, 1.8.2, 1.8.6, 1.8.7, 1.8.10, 1.8.11
-1.7.9                1.7.12, 1.7.15, 1.7.16, 1.8.1, 1.8.2, 1.8.6, 1.8.7, 1.8.10, 1.8.11
-1.7.7                1.7.9, 1.7.12, 1.7.15, 1.7.16, 1.8.1, 1.8.2, 1.8.6, 1.8.7, 1.8.10, 1.8.11
+-------------------  ---------------------------------------------------------------------------------
+1.10.5               None available
+1.10.3               1.10.5
+1.9.9                1.10.3, 1.10.5
+1.9.6                1.9.9, 1.10.3, 1.10.5
+1.9.2                1.9.6, 1.9.9, 1.10.3, 1.10.5
+1.9.1                1.9.2, 1.9.6, 1.9.9, 1.10.3, 1.10.5
+1.8.14               1.9.1, 1.9.2, 1.9.6, 1.9.9
+1.8.11               1.8.14, 1.9.1, 1.9.2, 1.9.6, 1.9.9
+1.8.10               1.8.11, 1.8.14, 1.9.1, 1.9.2, 1.9.6, 1.9.9
+1.8.7                1.8.10, 1.8.11, 1.8.14, 1.9.1, 1.9.2, 1.9.6, 1.9.9
+1.8.6                1.8.7, 1.8.10, 1.8.11, 1.8.14, 1.9.1, 1.9.2, 1.9.6, 1.9.9
+1.8.2                1.8.6, 1.8.7, 1.8.10, 1.8.11, 1.8.14, 1.9.1, 1.9.2, 1.9.6, 1.9.9
+1.8.1                1.8.2, 1.8.6, 1.8.7, 1.8.10, 1.8.11, 1.8.14, 1.9.1, 1.9.2, 1.9.6, 1.9.9
+1.7.16               1.8.1, 1.8.2, 1.8.6, 1.8.7, 1.8.10, 1.8.11, 1.8.14
+1.7.15               1.7.16, 1.8.1, 1.8.2, 1.8.6, 1.8.7, 1.8.10, 1.8.11, 1.8.14
+1.7.12               1.7.15, 1.7.16, 1.8.1, 1.8.2, 1.8.6, 1.8.7, 1.8.10, 1.8.11, 1.8.14
+1.7.9                1.7.12, 1.7.15, 1.7.16, 1.8.1, 1.8.2, 1.8.6, 1.8.7, 1.8.10, 1.8.11, 1.8.14
+1.7.7                1.7.9, 1.7.12, 1.7.15, 1.7.16, 1.8.1, 1.8.2, 1.8.6, 1.8.7, 1.8.10, 1.8.11, 1.8.14
 ```
 
-Au vu de retour de notre commande `kubectl get nodes` nous somment en **1.9.6** donc nous pouvons migré sur la 1.10.3. Pour cela nous utiliserons la function **upgrade** et son paramètre **--kubernetes-version** : `az aks upgrade --resource-group soat-techlab --name soatTechlabCluster --kubernetes-version 1.10.3`
+Au vu de retour de notre commande `kubectl get nodes` nous somment en **1.9.9** donc nous pouvons migré sur la 1.10.5. Pour cela nous utiliserons la function **upgrade** et son paramètre **--kubernetes-version** : `az aks upgrade --resource-group soat-techlab --name soatTechlabCluster --kubernetes-version 1.10.5`
 
 ```sh
-> az aks upgrade --resource-group soat-techlab --name soatTechlabCluster --kubernetes-version 1.10.3
+> az aks upgrade --resource-group soat-techlab --name soatTechlabCluster --kubernetes-version 1.10.5
 Kubernetes may be unavailable during cluster upgrades.
 Are you sure you want to perform this operation? (y/n): Y
 {
@@ -274,7 +277,7 @@ Are you sure you want to perform this operation? (y/n): Y
   "enableRbac": false,
   "fqdn": "soattechla-soat-techlab-8f4fa8-224644c9.hcp.westeurope.azmk8s.io",
   "id": "/subscriptions/1c732489-346b-4a9a-a417-4f09c23378a7/resourceGroups/soat-techlab/providers/Microsoft.ContainerService/managedClusters/soatTechlabCluster",
-  "kubernetesVersion": "1.10.3",
+  "kubernetesVersion": "1.10.5",
   "linuxProfile": {
     "adminUsername": "azureuser",
     "ssh": {
@@ -316,7 +319,7 @@ Pour vérifier que tout fonctionne, vous pouvez utiliser la function **show**.
 > az aks show --resource-group soat-techlab --name soatTechlabCluster --output table
 Name                Location    ResourceGroup    KubernetesVersion    ProvisioningState    Fqdn
 ------------------  ----------  ---------------  -------------------  -------------------  ----------------------------------------------------------------
-soatTechlabCluster  westeurope  soat-techlab     1.10.3               Succeeded            soattechla-soat-techlab-8f4fa8-224644c9.hcp.westeurope.azmk8s.io
+soatTechlabCluster  westeurope  soat-techlab     1.10.5               Succeeded            soattechla-soat-techlab-8f4fa8-224644c9.hcp.westeurope.azmk8s.io
 ```
 
 Vous pourriez aussi tout aussi bien vérifier par la commande `kubectl get nodes`
@@ -324,7 +327,7 @@ Vous pourriez aussi tout aussi bien vérifier par la commande `kubectl get nodes
 ```sh
 > kubectl get nodes
 NAME                       STATUS    ROLES     AGE       VERSION
-aks-nodepool1-49289993-1   Ready     agent     9m        v1.10.3
+aks-nodepool1-49289993-1   Ready     agent     9m        v1.10.5
 ```
 
 ## Préparation du cluster
