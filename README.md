@@ -4,18 +4,17 @@ Dans la lignée du précédent Techlab, nous allons voir comment déployer l'app
 
 ## Prérequis 🏗️
 
-- Docker for windows (version 18.03.1-ce-win65, build 17513) disponible sur le channel stable.
-- Azure Cli (version 2.0.39)
-- Kubectl (version 1.9.6)
+- Un compte Azure avec une souscription active. Si vous n'en avez pas vous pouvez créer un compte gratuit à cette adresse [https://azure.microsoft.com/fr-fr/free](https://azure.microsoft.com/fr-fr/free/)
+- Docker sur Linux directement ou Docker for windows/mac (version 18.03.1-ce-win65, build 17513) disponible sur le channel stable.
+- Azure Cli (version 2.0.45)
+- Kubectl (version >= 1.9.6)
 - helm (version 2.9.1) [lien pour le téléchargement](https://github.com/kubernetes/helm/releases/tag/v2.9.1)
-
-Une fois Docker for windows (ou mac) installé, il vous faudra activer la prise en charge de Kubernetes comme ci-dessous.
-![docker for windows kubernetes support](assets/docker-kubernetes-support.png)
 
 ## Étapes 🏭
 
 <ul>
-  <li><a href="./1 - Build de l'image et test local sur docker.md">Build de l'image et test local sur docker.md</a></li>
+  <li><a href="./0 - Initialisons Azure.md">Initialisons Azure ... car cela prend du temps 💤</a></li>
+  <li><a href="./1 - Build de l'image et test local sur docker.md">Build de l'image et test local sur docker</a></li>
   <li><a href="./2 - Les ressources Azure.md">Les ressources Azure</a></li>
   <li><a href="./3 - Deployer l'application sur le Cluster.md">Deployer l'application sur le Cluster</a></li>
 </ul>

@@ -1,14 +1,14 @@
 # Deployer l'application sur le Cluster
 
-Maintenant que l'application et le cluster sont prêt nous allons voir comment héberger les images ainsi que les déployer sur le cluster Kubernetes.
+Maintenant que l'application et le cluster sont prêts nous allons voir comment héberger les images ainsi que les déployer sur le cluster Kubernetes.
 
-A l'image des fichier docker-compose, les fichier de configuration pour Kubernetes sont écrient en **yaml**. Pour chaque étape nous crérons un fichier yaml contenant les configurations de chaque service de l'application.
+A l'image des fichier docker-compose, les fichiers de configuration pour Kubernetes sont écrient en **yaml**. Pour chaque étape nous créerons un fichier yaml contenant les configurations de chaque service de l'application.
 
 > #### Information 💡
 >
-> Comme nous voulons que cela soit déployé en même temps, nous mettrons chaque manifestes de chaque service dans le même fichier tout en veillant à bien séparer les manifestes par **---**.
+> Comme nous voulons que cela soit déployé en même temps, nous mettrons chaque manifeste de chaque service dans le même fichier tout en veillant à bien séparer les manifestes par **---**.
 
-## Deploiement de lab-surbey-redis
+## Deploiement de lab-survey-redis
 
 Pour qu'une application soit déployée et soit accessible hors du pod sur Kubernetes, il faut déclarer deux ressources : un **Deployment** et un **Service**.
 
@@ -16,11 +16,11 @@ Pour qu'une application soit déployée et soit accessible hors du pod sur Kuber
 
 Pour le déployment on donnera comme metadata :
 
-- un nom **lab-surbey-redis** afin d'identifier la base de donnée.
+- un nom **lab-survey-redis** afin d'identifier la base de donnée.
 
 La partie **spec** correspond aux configurations de votre pod, par le champ **replicat** qui permettra de définir le nombre d'instance qu'y devront être déployées par l'orchestrateur et le champs **template** qui, un peu comme un docker-compose, définit l'application.
 
-Ce **template** comporte des **metadata**, permettant de donner un label qui permettra au service de matcher avec le pod, et à nouveau un champs **spec** où on pourra définir le container. En prenant exemple sur le docker compose, nous le nommerons **lab-surbey-redis**. On prendra l'image **redis** et on précisera qu'on expose le **port** de redis (**6379**) du container grâce à **containerPort: 6379**.
+Ce **template** comporte des **metadata**, permettant de donner un label qui permettra au service de matcher avec le pod, et à nouveau un champs **spec** où on pourra définir le container. En prenant exemple sur le docker compose, nous le nommerons **lab-survey-redis**. On prendra l'image **redis** et on précisera qu'on expose le **port** de redis (**6379**) du container grâce à **containerPort: 6379**.
 
 ```yaml
 apiVersion: apps/v1
@@ -38,10 +38,10 @@ spec:
         app: lab-survey-redis
     spec:
       containers:
-      - name: lab-survey-redis
-        image: redis
-        ports:
-        - containerPort: 6379
+        - name: lab-survey-redis
+          image: redis
+          ports:
+            - containerPort: 6379
 ```
 
 ### Exposé la base de donnée à l'intérieur du cluster
@@ -60,7 +60,7 @@ metadata:
   name: lab-survey-redis
 spec:
   ports:
-  - port: 6379
+    - port: 6379
   selector:
     app: lab-survey-redis
 ```
@@ -114,17 +114,17 @@ spec:
         app: lab-survey-api
     spec:
       imagePullSecrets:
-      - name: azureregistry
+        - name: azureregistry
       containers:
-      - name: lab-survey-api
-        image: soattechlabregistry.azurecr.io/lab-survey-api:1.0
-        env:
-        - name: REDIS
-          value: "lab-survey-redis"
-        - name: ASPNETCORE_ENVIRONMENT
-          value: "Production"
-        ports:
-        - containerPort: 5000
+        - name: lab-survey-api
+          image: soattechlabregistry.azurecr.io/lab-survey-api:1.0
+          env:
+            - name: REDIS
+              value: 'lab-survey-redis'
+            - name: ASPNETCORE_ENVIRONMENT
+              value: 'Production'
+          ports:
+            - containerPort: 5000
 ```
 
 ### Exposition public de l'api
@@ -138,9 +138,9 @@ metadata:
   name: lab-survey-api
 spec:
   ports:
-  - name: http
-    port: 80
-    targetPort: 5000
+    - name: http
+      port: 80
+      targetPort: 5000
   selector:
     app: lab-survey-api
 ```
@@ -155,9 +155,9 @@ service "lab-survey-api" created
 
 ## Deploiement lab-survey-front
 
-Maintenant qu'on a deployer deux instance, je vous laisse imaginer que nous allopsn déployer le front. En partant sur ce qu'on sais déjà je vous laisse imaginer le contenue du fichier _lab-survey-front.yaml_.
+Maintenant qu'on a deployé deux instances, je vous laisse imaginer que nous allon sdéployer le front. En partant sur ce que l'on sait déjà, je vous laisse imaginer le contenue du fichier _lab-survey-front.yaml_.
 
-Je vous met la réponse ci dessous au cas où :
+Je vous mets la réponse ci dessous au cas où :
 
 ```yaml
 apiVersion: apps/v1
@@ -179,12 +179,12 @@ spec:
         app: lab-survey-front
     spec:
       imagePullSecrets:
-      - name: azureregistry
+        - name: azureregistry
       containers:
-      - name: lab-survey-front
-        image: soattechlabregistry.azurecr.io/lab-survey-front:1.0
-        ports:
-        - containerPort: 5000
+        - name: lab-survey-front
+          image: soattechlabregistry.azurecr.io/lab-survey-front:1.0
+          ports:
+            - containerPort: 5000
 ---
 apiVersion: v1
 kind: Service
@@ -192,26 +192,26 @@ metadata:
   name: lab-survey-front
 spec:
   ports:
-  - name: http
-    port: 80
-    targetPort: 80
+    - name: http
+      port: 80
+      targetPort: 80
   selector:
     app: lab-survey-front
 ```
 
 ## Test du deploiement
 
-Afin de pouvoir tester l'application, et pouvoir s'en servir, il faut pouvoir y accèder depuis l'extérieur du Cluster. Pour cela vous avezz deux grandes solutions :
+Afin de pouvoir tester l'application, et pouvoir s'en servir, il faut pouvoir y accèder depuis l'extérieur du Cluster. Pour cela, vous avez deux grandes solutions :
 
-- Configurer le service _lab-survey-front_ en service de _type_ **LoadBalancer**, mais cela demenderais soit de configurer l'api en public avec un type LoadBalancer aussi, soit coder un reverse proxy pour que le front appel l'api via son Nginx. Dans tout les cas cette solution pose le problème que si pour chacun des services que vous exposés, vous récupérée une adresse IP, votre provider de cloud va rapidement vous avertir que vous avez des limites, et qu'après cela sera payant (vu la raretée des IPv4)
-- Crée un **Ingress** devant les services afin de service justement de reverse proxy et de limitée à une IP pour tout les services que l'ingress reroutera. Cela est plutot une bonne pratique quand vous n'etes pas sur un cluster on promise.
+- Configurer le service _lab-survey-front_ en service de _type_ **LoadBalancer**, mais cela demenderait soit de configurer l'api en public avec un type LoadBalancer aussi, soit coder un reverse proxy pour que le front appel l'api via son Nginx. Dans tous les cas cette solution pose le problème que si pour chacun des services que vous exposez, vous récupérerez une adresse IP, votre provider de cloud va rapidement vous avertir que vous avez des limites, et qu'après cela sera payant (vu la raretée des IPv4)
+- Crée un **Ingress** devant les services afin de servir justement de reverse proxy et de limiter à une IP pour tous les services que l'ingress reroutera. Cela est plutôt une bonne pratique quand vous n'êtes pas sur un cluster on promise.
 
-Nous alons donc partir sur la création d'un **Ingress** en se servant de controllers implémentées par **nginx-ingress**, mais avant ca nous nous occuperons du manifest de cette **ingress**. Donc le _kind_ sera **Ingress**, nous le nomerons **lab-survey** et nous ajouterrons l'annoation _nginx.ingress.kubernetes.io/rewrite-target: /_ afin de faire croire aux target que nous les appellons directement à partir de leur racine comme ils s'y attendent. Pour la partie _rules_ nous définirons la partie _http_ avec 2 _path_ :
+Nous allons donc partir sur la création d'un **Ingress** en se servant de controllers implémentées par **nginx-ingress**, mais avant cela, nous nous occuperons du manifest de cette **ingress**. Donc le _kind_ sera **Ingress**, nous le nomerons **lab-survey** et nous ajouterons l'annotation _nginx.ingress.kubernetes.io/rewrite-target: /_ afin de faire croire aux targets que nous les appellons directement à partir de leur racine comme ils s'y attendent. Pour la partie _rules_ nous définirons la partie _http_ avec 2 _path_ :
 
 - **/** Qui devra servir le service **lab-survey-front** sur le port **80**
 - **/api** Qui devra servir le service **lab-survey-api** sur le port **80**
 
-Cela nous donneras un fichier, que nous nommerons _lab-survey-ingress.yaml_, qui devrais ressemblé à ceci :
+Cela nous donnera un fichier, que nous nommerons _lab-survey-ingress.yaml_, qui devrait ressembler à ceci :
 
 ```yaml
 apiVersion: extensions/v1beta1
@@ -222,19 +222,19 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
 spec:
   rules:
-  - http:
-      paths:
-      - path: /
-        backend:
-          serviceName: lab-survey-front
-          servicePort: 80
-      - path: /api
-        backend:
-          serviceName: lab-survey-api
-          servicePort: 80
+    - http:
+        paths:
+          - path: /
+            backend:
+              serviceName: lab-survey-front
+              servicePort: 80
+          - path: /api
+            backend:
+              serviceName: lab-survey-api
+              servicePort: 80
 ```
 
-Il nous reste l'_ingresse controller_ et pour cela nous utiliserons _helm_ afin de mettre en place un ingress de type **nginx-ingress** grace au package **stable/nginx-ingress**, la commande _helm install_ et le paramètre _name_ afin de lui donner un nom comme **reverse-proxy** . Cela donne `helm install stable/nginx-ingress --name reverse-proxy`.
+Il nous reste l'_ingresse controller_ et pour cela nous utiliserons _helm_ afin de mettre en place un ingress de type **nginx-ingress** grâce au package **stable/nginx-ingress**, la commande _helm install_ et le paramètre _name_ afin de lui donner un nom comme **reverse-proxy** . Cela donne `helm install stable/nginx-ingress --name reverse-proxy`.
 
 ```sh
 > helm install stable/nginx-ingress --name reverse-proxy
@@ -311,7 +311,7 @@ If TLS is enabled for the Ingress, a Secret containing the certificate and key m
   type: kubernetes.io/tls
 ```
 
-Avantg de pouvoir tester il va falloir récupérer l'ip public, le tempalte helm nous communique le moyen le plus simple de le faire donc nous fairons `kubectl --namespace default get services -o wide -w reverse-proxy-nginx-ingress-controller`
+Avant de pouvoir tester, il va falloir récupérer l'ip public, le tempalte helm nous communique le moyen le plus simple de le faire donc nous ferons `kubectl --namespace default get services -o wide -w reverse-proxy-nginx-ingress-controller`
 
 ```sh
 > kubectl --namespace default get services -o wide -w reverse-proxy-nginx-ingress-controller
@@ -319,9 +319,18 @@ NAME                                     TYPE           CLUSTER-IP     EXTERNAL-
 reverse-proxy-nginx-ingress-controller   LoadBalancer   10.0.164.182   13.80.0.86    80:30584/TCP,443:31557/TCP   4h        app=nginx-ingress,component=controller,release=reverse-proxy
 ```
 
-Donc en allant sur l'_EXTERNAL-IP_, **13.80.0.86**, nous devriez tomber sur l'application et elle doit etre totalement fonctionnel.
+Donc en allant sur l'_EXTERNAL-IP_, **13.80.0.86** dans mon cas, nous devrions tomber sur l'application et elle doit être totalement fonctionnelle.
 ![preview de l'application](assets/etape-3-lab-survey-preview.png)
 
 ## Félicitation, vous avez déployé votre premiere application avec un cluster Kubernetes sur azure. 🎊🏆🎉
 
-Si vous êtes là, normalement, vous avez déployé votre première application dans un cluster Kubernetes sur azure tout en permettant de découpler les ressources de l'application, un serveur redis et votre code.
+Si vous êtes là, normalement, vous avez déployés votre première application dans un cluster Kubernetes sur azure tout en permettant de découpler les ressources de l'application, un serveur redis et votre code.
+
+## Bonus : Economisé de l'argent
+
+Lors de ce Techlab nous avons crée des ressources, quand nous aurons finis de les utiliser, il serait bien de les supprimer afin d'arrêter leur facturation. C'est une des raisons expliquant que nous avons crée les ressources dans un ressource groupe dédié. Pour cela, nous utiliserons la sous commande **detele** de la commande _az group_ ce qui donnera `az group delete --name soat-techlab`.
+
+```sh
+> az group delete --name soat-techlab
+Are you sure you want to perform this operation? (y/n): Y
+```

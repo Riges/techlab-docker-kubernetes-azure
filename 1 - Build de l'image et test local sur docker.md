@@ -1,11 +1,11 @@
 # Build de l'image et test local sur docker
 
 Nous partons sur le projet Lab survey ([https://github.com/Riges/lab-survey](https://github.com/Riges/lab-survey)). Cela va nous permettre d'avoir un front et son api dissociés du stockage qui sera un Redis.
-Pour préparer l'exercice, nous avons fait ca dans le répertoire **src** qui sera notre repertoir de travail, vous n'avez donc pas besoin de clonner le projet.
+Pour préparer l'exercice, nous avons fait cela dans le répertoire **src** qui sera notre repertoire de travail, vous n'avez donc pas besoin de clonner le projet.
 
 ## Préambule : Docker Hub
 
-Lors de ce Techlab, nous serons nombreux à utiliser la même IP pour demander les images au docker hub. Pour s'assurer de ne pas être limité nous prendrons le parti de nous identifier sur le Docker Hub.
+Lors de ce Techlab, nous serons nombreux à utiliser la même IP pour demander les images au docker hub. Pour s'assurer de ne pas être limité, nous prendrons le parti de nous identifier sur le Docker Hub.
 
 ### Identification
 
@@ -23,16 +23,14 @@ Login Succeeded
 
 ## Definition des services 📝
 
-Afin de pouvoir créer les conteneurs nécessaires, nous nous servirons du fichier `docker-compose.yml` qui se décompose en trois services. Pour ce faire nous utiliseront le format docker-compose en **version 3** permettant de déclarer les services comme tel :
+Afin de pouvoir créer les conteneurs nécessaires, nous nous servirons du fichier `docker-compose.yml` qui se décompose en trois services. Pour ce faire, nous utiliserons le format docker-compose en **version 3** permettant de déclarer les services comme tel :
 
 ```yaml
 version: '3'
 
 services:
-  ServiceA:
-    ...
-  ServiceB:
-    ...
+  ServiceA: ...
+  ServiceB: ...
 ```
 
 ### Le service redis
@@ -44,7 +42,7 @@ lab-survey-redis:
   image: redis
   container_name: lab-survey-redis
   ports:
-      - "6379:6379"
+    - '6379:6379'
 ```
 
 ### Le service api
@@ -53,7 +51,7 @@ lab-survey-redis:
 
 Pour construire l'image, nous aurons besoin d'un 'Dockerfile', un fichier permettant de définir le processus de construction de l'image, que nous mettrons à coté du fichier _lab-survey-api.csproj_. Le programme étant en .Net Core et comme Microsoft nous fournit tous les outils, nous ferons un _multi-stage build_ permettant d'avoir une étape de build de l'application sur une image dédiée. Puis nous récupérerons le résultat du build pour lancer l'application sur une image dédiée à l'hébergement de cette application.
 
-Pour la partie build de l'application nous utiliserons l'image **microsoft/dotnet:2.1-sdk-alpine** que nous nommerons **build-env** et nous travaillerons dans le répertoire **/src**. Comme les dépendances changent moins que le code source d'une application, nous nous en occuperons en premier afin que cette partie de l'image reste en cache. Pour pouvoir restaurer les dépendances grâce à la commande 'dotnet restore', nous copierons le fichier **lab-survey-api.csproj** dans l'image. Une fois cela fait, nous copierons le reste des sources dans l'image et nous utiliserons la commande 'dotnet publish' en spécifiant que nous voulons la configuration **Release** et que le répertoire de sortie sera nommé **out**.
+Pour la partie build de l'application, nous utiliserons l'image **microsoft/dotnet:2.1-sdk-alpine** que nous nommerons **build-env** et nous travaillerons dans le répertoire **/src**. Comme les dépendances changent moins que le code source d'une application, nous nous en occuperons en premier afin que cette partie de l'image reste en cache. Pour pouvoir restaurer les dépendances grâce à la commande 'dotnet restore', nous copierons le fichier **lab-survey-api.csproj** dans l'image. Une fois cela fait, nous copierons le reste des sources dans l'image et nous utiliserons la commande 'dotnet publish' en spécifiant que nous voulons la configuration **Release** et que le répertoire de sortie sera nommé **out**.
 
 ```Dockerfile
 FROM microsoft/dotnet:2.1-sdk-alpine AS build-env
@@ -64,7 +62,7 @@ COPY . .
 RUN dotnet publish -c Release -o out
 ```
 
-Pour l'étape d'hébergement de l'application compilée, nous utiliserons l'image **microsoft/aspnetcore:2.0.6** en copiant les fichiers générés par l'étape **build-env** dans le répertoire **/src/out** dans le répertoire de travail courant de cette image **/app**. Nous lui préciserons une variable d'environnement, **ASPNETCORE_URLS**, permettant de choisir le format d'url de l'application (**http://+:5000**) ce qui permettra de connaitre le port/tcp à exposer. Le point d'entrée de l'image se fera sur la commande **dotnet** en utilisant la dll générée par l'étape de build **lab-survey-api.dll**.
+Pour l'étape d'hébergement de l'application compilée, nous utiliserons l'image **microsoft/dotnet:2.1-aspnetcore-runtime-alpine** en copiant les fichiers générés par l'étape **build-env** dans le répertoire **/src/out** dans le répertoire de travail courant de cette image **/app**. Nous lui préciserons une variable d'environnement, **ASPNETCORE_URLS**, permettant de choisir le format d'url de l'application (**http://+:5000**) ce qui permettra de connaitre le port/tcp à exposer. Le point d'entrée de l'image se fera sur la commande **dotnet** en utilisant la dll générée par l'étape de build **lab-survey-api.dll**.
 
 ```Dockerfile
 FROM microsoft/dotnet:2.1-aspnetcore-runtime-alpine
@@ -110,14 +108,14 @@ lab-survey-api:
     REDIS: lab-survey-redis
     ASPNETCORE_ENVIRONMENT: Production
   ports:
-    - "8081:5000"
+    - '8081:5000'
 ```
 
 ### Le service front
 
 #### Le Dockerfile du front
 
-Nous repartirons sur un _multi-stage build_, et nous utiliserons l'image **node:alpine** pour l'image de build (que nous nommerons **builder**), on commencera cette fois si par copié les dossier package.json et yarn.lock afin de récupérer les dépendances du projet et optimiser le cache. Puis nous voudrons copier le reste afin de pouvoir builder le projet en utilisant la commande 'yarn run build'.
+Nous repartirons sur un _multi-stage build_, et nous utiliserons l'image **node:alpine** pour l'image de build (que nous nommerons **builder**), on commencera cette fois ci par copier les dossiers package.json et yarn.lock afin de récupérer les dépendances du projet et optimiser le cache. Puis nous voudrons copier le reste afin de pouvoir builder le projet en utilisant la commande 'yarn run build'.
 
 ```Dockerfile
 FROM node:alpine AS builder
@@ -128,7 +126,7 @@ COPY . .
 RUN yarn run build
 ```
 
-Ensuite nous passeront au stage permettant d'hérberger notre site static et pour cela nous prendrons l'image **nginx:alpine** et nous nous contenterons de copier le dossier **/app/build** depuis le stage **builder** vers le dossier **/usr/share/nginx/html**.
+Ensuite, nous passerons au stage permettant d'héberger notre site statique et pour cela nous prendrons l'image **nginx:alpine** et nous nous contenterons de copier le dossier **/app/build** depuis le stage **builder** vers le dossier **/usr/share/nginx/html**.
 
 ```Dockerfile
 FROM nginx:alpine
@@ -137,7 +135,7 @@ COPY --from=builder /app/build /usr/share/nginx/html
 
 #### La définition de la configuration du front
 
-En ce basant sur ce qu'on a vu avant entre le redis et l'api nous pouvons facilement faire la configuration du front. Pour cela on va nommer le service et l'image **lab-survey-front**, on va lui demander de build l'image avec le dockerfile précédemment créé, puis on exposera le port **80** du conteneur vers le port **8080** de l'host.
+En ce basant sur ce qu'on a vu avant entre le redis et l'api, nous pouvons facilement faire la configuration du front. Pour cela, on va nommer le service et l'image **lab-survey-front**, on va lui demander de build l'image avec le dockerfile précédemment créé, puis on exposera le port **80** du conteneur vers le port **8080** de l'host.
 
 ```yaml
 lab-survey-front:
@@ -147,7 +145,7 @@ lab-survey-front:
     dockerfile: Dockerfile
   container_name: lab-survey-front
   ports:
-      - "8080:80"
+    - '8080:80'
 ```
 
 ## Build 🏭 et déploiement 🚢 des images
@@ -352,3 +350,7 @@ db4c794fc3ec        redis               "docker-entrypoint.s…"   14 hours ago 
 ## Félicitation, vous avez déployé votre application. 🎊🏆🎉
 
 Voilà maintenant, vous savez comment construire un **DockerFile**, un fichier _docker-compose_, ainsi que builder et deployer des conteneurs.
+
+## La suite
+
+Pour continuer je vous invite à rejoindre l'étape 2 <a href="./2 - Les ressources Azure.md">Les ressources Azure</a>
