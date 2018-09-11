@@ -27,7 +27,7 @@ To sign in, use a web browser to open the page https://microsoft.com/devicelogin
 
 ## Resource groupe
 
-Afin de centraliser les ressources crées lors de ce Techlabs, nous créerons une ressource groupe nommée, par exemple, **soat-techlab** dans la region **west europe** (comme tout le reste de nos ressources). On obtient alors la ressource suivante `az group create --name soat-techlab --location westeurope`. Ce qui nous donne :
+Afin de centraliser les ressources crées lors de ce Techlabs, nous créerons une ressource groupe nommé, par exemple, de **soat-techlab** dans la region **west europe** (comme tout le reste de nos ressources). On obtient alors la ressource suivante `az group create --name soat-techlab --location westeurope`. Ce qui nous donne :
 
 ```sh
 > az group create --name soat-techlab --location westeurope
@@ -47,11 +47,11 @@ Afin de centraliser les ressources crées lors de ce Techlabs, nous créerons un
 
 ### Création du cluster
 
-La commande sur Azure Cli permettant d'intéragir avec des cluster Kubernetes est **aks** et plus précisément **aks create**, si on veut créer un cluster. On le nommera, par exemple, **soatTechlabCluster**. On voudra **un** node **Standard A1 v2** car il s'agit d'un cluster de test donc pas besoin de voir trop grand. Pour notre soirée, nous éviterons de complexifier avec la création d'RBAC en lien avec Azure, donc nous ajouterons le paramètre **--disable-rbac** et nous utiliserons une clef ssh générée avec le paramètre **--generate-ssh-keys**.
+La commande sur Azure Cli permettant d'intéragir avec des cluster Kubernetes est **aks** et plus précisément **aks create**, si on veut créer un cluster. On le nommera, par exemple, **soatTechlabCluster**. On voudra **un** node, soit une VM sur Azure, avec la tarification **Standard A1 v2** car il s'agit d'un cluster de test donc pas besoin de voir trop grand. Pour notre soirée, nous éviterons de complexifier avec la création d'RBAC en lien avec Azure, donc nous ajouterons le paramètre **--disable-rbac** et nous utiliserons une clef ssh générée avec le paramètre **--generate-ssh-keys**.
 
 `az aks create --resource-group soat-techlab --name soatTechlabCluster --node-count 1 --node-vm-size Standard_A1_v2 --disable-rbac --generate-ssh-keys`
 
-La commande suivante est celle prenant du temps, donc je vous invite à la lancer et de passer à la suite tout en surveillant son avancée.
+La commande suivante est celle prenant du temps, donc je vous invite à la lancer et de passer à la suite tout en surveillant son avancée. En attendant vous pouvez passer à l'étape 1 : <a href="./1 - Build de l'image et test local sur docker.md">Build de l'image et test local sur docker</a>
 
 ```sh
 > az aks create --resource-group soat-techlab --name soatTechlabCluster --node-count 1 --node-vm-size Standard_A1_v2 --disable-rbac --generate-ssh-keys
