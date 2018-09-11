@@ -27,7 +27,7 @@ To sign in, use a web browser to open the page https://microsoft.com/devicelogin
 
 ## Resource groupe
 
-Afin de centraliser les ressources crées lors de ce Techlabs, nous créerons une ressource groupe nommée, par exemple, de **soat-techlab** dans la region **west europe** (comme tout le reste de nos ressources). On obtient alors la ressource suivante `az group create --name soat-techlab --location westeurope`. Ce qui nous donne :
+Afin de centraliser les ressources crées lors de ce Techlabs, nous créerons une ressource groupe nommée, par exemple, **soat-techlab** dans la region **west europe** (comme tout le reste de nos ressources). On obtient alors la ressource suivante `az group create --name soat-techlab --location westeurope`. Ce qui nous donne :
 
 ```sh
 > az group create --name soat-techlab --location westeurope
