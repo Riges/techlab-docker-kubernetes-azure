@@ -6,9 +6,9 @@ Dans la lignée du précédent Techlab, nous allons voir comment déployer l'app
 
 - Un compte Azure avec une souscription active. Si vous n'en avez pas vous pouvez créer un compte gratuit à cette adresse [https://azure.microsoft.com/fr-fr/free](https://azure.microsoft.com/fr-fr/free/)
 - Docker sur Linux directement ou Docker for windows/mac (version 18.03.1-ce-win65, build 17513) disponible sur le channel stable.
-- Azure Cli (version 2.0.45)
-- Kubectl (version >= 1.9.6)
-- helm (version 2.9.1) [lien pour le téléchargement](https://github.com/kubernetes/helm/releases/tag/v2.9.1)
+- [Azure Cli](https://docs.microsoft.com/fr-fr/cli/azure/install-azure-cli?view=azure-cli-latest) (version 2.0.45)
+- [Kubectl](https://kubernetes.io/docs/tasks/tools/install-kubectl/#install-kubectl) (version >= 1.9.6)
+- [helm](https://helm.sh/) (version 2.9.1) [lien pour le téléchargement](https://github.com/kubernetes/helm/releases/tag/v2.9.1)
 
 ## Étapes 🏭
 
