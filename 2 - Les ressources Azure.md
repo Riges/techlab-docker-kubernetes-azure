@@ -59,7 +59,7 @@ Avec cet url, vous pourrez tagger et pousser sur vos images sur le repository en
   docker tag lab-survey-api soattechlabregistry.azurecr.io/lab-survey-api:1.0
 ```
 
-Après, il vous suffit de **push** les images en se servant de leurs tags. Cela devrait être `docker push lab-survey-front soattechlabregistry.azurecr.io/lab-survey-front:1.0` et `docker push soattechlabregistry.azurecr.io/lab-survey-api:1.0`.
+Après, il vous suffit de **push** les images en se servant de leurs tags. Cela devrait être `docker push soattechlabregistry.azurecr.io/lab-survey-front:1.0` et `docker push soattechlabregistry.azurecr.io/lab-survey-api:1.0`.
 
 ```sh
 > docker push soattechlabregistry.azurecr.io/lab-survey-front:1.0
