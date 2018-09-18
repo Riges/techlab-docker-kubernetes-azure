@@ -2,7 +2,7 @@
 
 Maintenant que l'application et le cluster sont prêts nous allons voir comment héberger les images ainsi que les déployer sur le cluster Kubernetes.
 
-A l'image des fichier docker-compose, les fichiers de configuration pour Kubernetes sont écrient en **yaml**. Pour chaque étape nous créerons un fichier yaml contenant les configurations de chaque service de l'application.
+A l'image des fichier docker-compose, les fichiers de configuration pour Kubernetes sont écrient en **yaml**. Pour chaque étape nous créerons un fichier yaml contenant les configurations de chaque service de l'application. Pour ce Techlab nous avons disposé des fichiers vides dans le répertoire **src/kube**.
 
 > #### Information 💡
 >
