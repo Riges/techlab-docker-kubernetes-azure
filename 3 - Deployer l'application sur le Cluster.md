@@ -75,6 +75,13 @@ service "lab-survey-redis" created
 
 ## Deploiement lab-survey-api
 
+> #### Information 💡
+>
+> Dans l'optique où vous n'auriez pas fait l'étape 1, nous avons déposé des images sur le Docker Hub :
+>
+> - [riges/lab-survey-api](https://hub.docker.com/r/riges/lab-survey-api/)
+> - [riges/lab-survey-front](https://hub.docker.com/r/riges/lab-survey-front/)
+
 ### Le déploiement de l'api
 
 Il faut maintenant préparer le manifest du déploiement, nous prendrons donc **lab-survey-api** comme nom.
