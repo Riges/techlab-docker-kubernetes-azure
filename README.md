@@ -1,4 +1,4 @@
-# Techlab docker et kubernetes sur Azure : Déployé vos premier pods sur Azure
+# Techlab docker et kubernetes sur Azure : Déployé vos premiers pods sur Azure
 
 Dans la lignée du précédent Techlab, nous allons voir comment déployer l'application dans Azure. Lors de ce Techlab nous reverrons la création des conteneurs **docker**, la création de l'infrastructure sur **Azure** (_Azure Registrey_ + _Azure Containeur Service_ avec l'orchestrateur **Kubernetes**), le déploiement des conteneurs avec la mise en place d'_ingress_, ainsi qu'un aperçu d'**Helm**.
 
