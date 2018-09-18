@@ -234,10 +234,10 @@ spec:
               servicePort: 80
 ```
 
-Il nous reste l'_ingresse controller_ et pour cela nous utiliserons _helm_ afin de mettre en place un ingress de type **nginx-ingress** grâce au package **stable/nginx-ingress**, la commande _helm install_ et le paramètre _name_ afin de lui donner un nom comme **reverse-proxy** . Cela donne `helm install stable/nginx-ingress --name reverse-proxy`.
+Il nous reste l'_ingresse controller_ et pour cela nous utiliserons _helm_ afin de mettre en place un ingress de type **nginx-ingress** grâce au package **stable/nginx-ingress**, la commande _helm install_ et le paramètre _name_ afin de lui donner un nom comme **reverse-proxy** . Cela donne `helm install stable/nginx-ingress --name reverse-proxy --set rbac.create=false`.
 
 ```sh
-> helm install stable/nginx-ingress --name reverse-proxy
+> helm install stable/nginx-ingress --name reverse-proxy --set rbac.create=false
 NAME:   reverse-proxy
 LAST DEPLOYED: Tue Jul 31 11:35:13 2018
 NAMESPACE: default
