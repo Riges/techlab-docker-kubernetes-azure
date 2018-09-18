@@ -155,7 +155,7 @@ service "lab-survey-api" created
 
 ## Deploiement lab-survey-front
 
-Maintenant qu'on a deployé deux instances, je vous laisse imaginer que nous allon sdéployer le front. En partant sur ce que l'on sait déjà, je vous laisse imaginer le contenue du fichier _lab-survey-front.yaml_.
+Maintenant qu'on a deployé deux instances, je vous laisse imaginer que nous allons déployer le front. En partant sur ce que l'on sait déjà, je vous laisse imaginer le contenue du fichier _lab-survey-front.yaml_.
 
 Je vous mets la réponse ci dessous au cas où :
 
