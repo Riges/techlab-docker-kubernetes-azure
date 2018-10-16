@@ -173,4 +173,4 @@ Happy Helming!
 
 ## La suite
 
-Pour continuer, je vous invite à rejoindre l'étape 2 <a href="./3 - Deployer l'application sur le Cluster.md">Deployer l'application sur le Cluster</a>
+Pour continuer, je vous invite à rejoindre l'étape 3 <a href="./3 - Deployer l'application sur le Cluster.md">Deployer l'application sur le Cluster</a>
