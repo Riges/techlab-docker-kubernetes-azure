@@ -130,7 +130,7 @@ aks-nodepool1-49289993-0   Ready     agent     11m       v1.9.9
 
 > #### Information
 >
-> Si vous voulez visualiser et manager les pods , les nodes du cluster, ainsi que les ressources en cours d'utilisation vous pouvez lancer l'application Kubernetes Dashbord qui est un exemple d'interface web fournis par l'équipe du projet. Pour Azure, vous avez la possibilité d'utiliser celle fournie grâce aux commandes d'Azure cli : `az aks browse --resource-group soat-techlab --name soatTechlabCluster`
+> Si vous voulez visualiser et manager les pods , les nodes du cluster, ainsi que les ressources en cours d'utilisation vous pouvez lancer l'application Kubernetes Dashboard qui est un exemple d'interface web fournis par l'équipe du projet. Pour Azure, vous avez la possibilité d'utiliser celle fournie grâce aux commandes d'Azure cli : `az aks browse --resource-group soat-techlab --name soatTechlabCluster`
 
 ### Bonus Mise à jour du cluster
 
