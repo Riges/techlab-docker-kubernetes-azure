@@ -44,7 +44,7 @@ spec:
             - containerPort: 6379
 ```
 
-### Exposé la base de donnée à l'intérieur du cluster
+### Exposer la base de donnée à l'intérieur du cluster
 
 Pour pouvoir exposer cette application de manière publique, ou comme dans notre cas entre deux pods, il faut lui déclarer un service. Pour ce faire, il faut déclarer un _kind_ de type **service**, puis lui donner un nom **lab-survey-redis**. Ensuite, nous définirons les **spec** du service :
 
