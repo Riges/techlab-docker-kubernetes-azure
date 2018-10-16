@@ -146,7 +146,7 @@ secret "azureregistry" created
 
 ### HELM
 
-Helm est un outil qui va vous aider à gérer vos applications Kubernetes, voyer cela comme un gestionnaire de paquet. Grâce à sa notion de _chart_, fonctionnant comme des packages pouvant être centralisé sur un repository afin d'être plus facilement partagé, vous pouvez définir votre application ainsi que l'installer et la mettre à jour plus facilement. A cette étape du techlab nous nous en servirons pour déployer des ressources que nous n'aurons pas développer, comme l'ingress nginx.
+Helm est un outil qui va vous aider à gérer vos applications Kubernetes, voyez cela comme un gestionnaire de paquet. Grâce à sa notion de _chart_, fonctionnant comme des packages pouvant être centralisé sur un repository afin d'être plus facilement partagé, vous pouvez définir votre application ainsi que l'installer et la mettre à jour plus facilement. A cette étape du techlab nous nous en servirons pour déployer des ressources que nous n'aurons pas développer, comme l'ingress nginx.
 
 Avant de commencer, il faut s'assurer qu'Helm est bien initaliser pour notre cluster. Pour ce faire, nous utiliserons la commade `helm init`.
 
