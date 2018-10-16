@@ -335,7 +335,7 @@ Si vous êtes là, normalement, vous avez déployés votre première application
 
 ## Bonus : Economisez de l'argent
 
-Lors de ce Techlab nous avons crée des ressources, quand nous aurons finis de les utiliser, il serait bien de les supprimer afin d'arrêter leur facturation. C'est une des raisons expliquant que nous avons crée les ressources dans un ressource groupe dédié. Pour cela, nous utiliserons la sous commande **detele** de la commande _az group_ ce qui donnera `az group delete --name soat-techlab`.
+Lors de ce Techlab nous avons crée des ressources, quand nous aurons finis de les utiliser, il serait bien de les supprimer afin d'arrêter leur facturation. C'est une des raisons expliquant que nous avons crée les ressources dans un ressource groupe dédié. Pour cela, nous utiliserons la sous commande **delete** de la commande _az group_ ce qui donnera `az group delete --name soat-techlab`.
 
 ```sh
 > az group delete --name soat-techlab
