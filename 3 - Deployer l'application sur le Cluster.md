@@ -333,7 +333,7 @@ Donc en allant sur l'_EXTERNAL-IP_, **13.80.0.86** dans mon cas, nous devrions t
 
 Si vous êtes là, normalement, vous avez déployés votre première application dans un cluster Kubernetes sur azure tout en permettant de découpler les ressources de l'application, un serveur redis et votre code.
 
-## Bonus : Economisé de l'argent
+## Bonus : Economisez de l'argent
 
 Lors de ce Techlab nous avons crée des ressources, quand nous aurons finis de les utiliser, il serait bien de les supprimer afin d'arrêter leur facturation. C'est une des raisons expliquant que nous avons crée les ressources dans un ressource groupe dédié. Pour cela, nous utiliserons la sous commande **detele** de la commande _az group_ ce qui donnera `az group delete --name soat-techlab`.
 
